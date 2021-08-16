@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "npm run format && next lint",
-    "format": "prettier --write '{*.js,*scss,pages/**/*.{js,jsx,scss}}'"
+    "format": "prettier --write '{*.js,*css,**/**/*.{js,jsx,css}}'"
   },
   "dependencies": {
     "next": "11.1.0",
