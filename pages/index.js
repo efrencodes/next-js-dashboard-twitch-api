@@ -10,8 +10,10 @@ const Home = () => {
 		const { value } = event.target.elements.name
 		if (value) {
 			// http://localhost:3000/api/twitch
-			const path = `http://${window.location.hostname}:3000`
-			console.error(path)
+			const MODE_ENVIRONMENT = process.env.MODE_ENVIRONMENT
+			const path = MODE_ENVIRONMENT === 'VERCEL'
+				? `https://${window.location.hostname}:3000`
+				: `http://${window.location.hostname}:3000`
 
 			let response = await fetch(`${path}/api/twitch`, {
 				method: 'POST',
