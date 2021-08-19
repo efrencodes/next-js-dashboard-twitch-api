@@ -8,8 +8,7 @@ export default async (req, res) => {
 
 			const channelName = await getTwitchChannel(data)
 
-			if(channelName) {
-				console.table(channelName)
+			if (channelName) {
 				res.status(200).json({ data: channelName })
 			}
 		}
@@ -25,23 +24,18 @@ const getTwitchChannel = async (channelName) => {
 		const accessToken = await getTwitchAccessToken()
 
 		if (accessToken) {
-			const response = await fetch(`${HOST_NAME}?query=${channelName}`, {
-				headers: {
-					Authorization: `Bearer ${accessToken}`,
-					'Client-Id': process.env.TWITCH_CLIENT_ID
-				}
-			})
+			const listChannelName = await getListChannelName(
+				accessToken,
+				channelName
+			)
 
-			const json = await response.json()
-
-			if (json.data) {
-				const { data } = json
+			if (listChannelName) {
 				const lowercaseChannelName = channelName.toLowerCase()
 
-				const foundChannel = data.find((channel) => {
+				const foundChannel = listChannelName.find((channel) => {
 					const lowercaseDisplayName =
 						channel.display_name.toLowerCase()
-					return lowercaseChannelName.includes(lowercaseDisplayName)
+					return lowercaseChannelName === lowercaseDisplayName
 				})
 
 				return foundChannel
@@ -55,9 +49,7 @@ const getTwitchChannel = async (channelName) => {
 const getTwitchAccessToken = async () => {
 	console.log('GETTING ACCESS TOKEN...')
 
-	const path = `https://id.twitch.tv/oauth2/token?client_id=
-		${process.env.TWITCH_CLIENT_ID}&client_secret=
-		${process.env.TWITCH_SECRET_ID}&grant_type=client_credentials`
+	const path = `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_CLIENT_ID}&client_secret=${process.env.TWITCH_SECRET_ID}&grant_type=client_credentials`
 
 	const response = await fetch(path, {
 		method: 'POST'
@@ -66,5 +58,30 @@ const getTwitchAccessToken = async () => {
 	if (response) {
 		const json = await response.json()
 		return json.access_token
+	}
+}
+
+const getListChannelName = async (accessToken, channelName) => {
+	console.log('GETTING TWITCH CHANNEL NAME...')
+
+	const path = `${HOST_NAME}?query=${channelName}`
+
+	const response = await fetch(path, {
+		method: 'GET',
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+			'Client-Id': process.env.TWITCH_CLIENT_ID
+		}
+	})
+
+	if (response) {
+		const json = await response.json()
+		return json.data
+	}
+}
+
+export const config = {
+	api: {
+		externalResolver: true
 	}
 }

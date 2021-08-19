@@ -1,17 +1,34 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import StreamerGrid from '../components/StreamerGrid'
 import { useState } from 'react'
+import Image from 'next/image'
 
 const Home = () => {
-	const [favoriteStreamer, setFavoriteStreamer] = useState([])
+	const [favoriteChannels, setFavoriteChannels] = useState([
+		{
+			broadcaster_language: 'es',
+			broadcaster_login: 'gndxdev',
+			display_name: 'gndxdev',
+			game_id: '509670',
+			game_name: 'Science & Technology',
+			id: '488869837',
+			is_live: false,
+			tag_ids: [],
+			thumbnail_url:
+				'https://static-cdn.jtvnw.net/jtv_user_pictures/1b633c9c-18f2-4ef8-a9e9-5b69291bcefb-profile_image-300x300.png',
+			title: '🔥 Un Frontend en cuarentena #Frontend #JavaScript',
+			started_at: ''
+		}
+	])
 
 	const addStreamerChannel = async (event) => {
 		event.preventDefault()
 		const { value } = event.target.elements.name
 		if (value) {
 			// http://localhost:3000/api/twitch
-			const path = `https://${window.location.hostname}:3000`
-			let response = await fetch(`${path}/api/twitch`, {
+			// const path = `https://${window.location.hostname}:3000`
+			let response = await fetch(`api/twitch`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -19,31 +36,17 @@ const Home = () => {
 				body: JSON.stringify({ data: value })
 			})
 
-			const json = await response.json()
+			const dataChannel = await response.json()
 
-			console.log('From the server: ', json.data)
-			setFavoriteStreamer((setValue) => [...setValue, value])
+			setFavoriteChannels((setValue) => [...setValue, dataChannel.data])
 			event.target.elements.name.value = ''
 		}
 	}
-	// renderForm
-	// const renderForm = () => {
-	// 	<div className={styles.formContainer}>
-	// 		<form>
-	// 			<input
-	// 				id="name"
-	// 				placeholder="Twitch Channel Name"
-	// 				type="text"
-	// 			/>
-	// 			<button type="submit">Add Streamer</button>
-	// 		</form>
-	// 	</div>
-	// }
 
 	return (
 		<div className={styles.container}>
 			<Head>
-				<title>🎥 Personal Twitch Dashboard</title>
+				<title>Personal Twitch Dashboard</title>
 				<meta
 					name="viewport"
 					content="initial-scale=1.0, width=device-width"
@@ -51,7 +54,12 @@ const Home = () => {
 			</Head>
 			<div className={styles.inputContainer}>
 				<div>
-					<h1>Welcome to the Personalized Twitch Dashboard! 🎥</h1>
+					<Image
+						width={60}
+						height={70}
+						src="/TwitchGlitchWhite.png"
+					/>
+					<h1>Welcome to the Personalized Twitch Dashboard</h1>
 					<div className={styles.formContainer}>
 						<form onSubmit={addStreamerChannel}>
 							<input
@@ -61,9 +69,26 @@ const Home = () => {
 							/>
 							<button type="submit">Add Streamer</button>
 						</form>
-						<div>{favoriteStreamer.join(', ')}</div>
 					</div>
+					<StreamerGrid channels={favoriteChannels} />
 				</div>
+				<footer className={styles.footer}>
+					<a
+						href="https://vercel.com/docs"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Powered by{' '}
+						<span className={styles.logo}>
+							<Image
+								src="/vercel.svg"
+								alt="Vercel Logo"
+								width={72}
+								height={16}
+							/>
+						</span>
+					</a>
+				</footer>
 			</div>
 		</div>
 	)
