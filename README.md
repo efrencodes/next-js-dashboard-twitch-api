@@ -1,4 +1,4 @@
-![](https://github.com/efrenmartinez/next-js-dashboard-twitch-api/blob/master/covers/next-js-dashboard-twitch-api.png)
+![](https://github.com/efrenmartinez/next-js-dashboard-twitch-api/blob/main/cover/next-js-dashboard-twitch-api.png)
 
 ### 💾 Live
 [next-js-dashboard-twitch-api.vercel.app](https://next-js-dashboard-twitch-api.vercel.app/)
