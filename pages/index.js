@@ -5,22 +5,23 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 const Home = () => {
-	const [favoriteChannels, setFavoriteChannels] = useState([
-		{
-			broadcaster_language: 'es',
-			broadcaster_login: 'gndxdev',
-			display_name: 'gndxdev',
-			game_id: '509670',
-			game_name: 'Science & Technology',
-			id: '488869837',
-			is_live: false,
-			tag_ids: [],
-			thumbnail_url:
-				'https://static-cdn.jtvnw.net/jtv_user_pictures/1b633c9c-18f2-4ef8-a9e9-5b69291bcefb-profile_image-300x300.png',
-			title: '🔥 Un Frontend en cuarentena #Frontend #JavaScript',
-			started_at: ''
-		}
-	])
+	// const [favoriteChannels, setFavoriteChannels] = useState([
+	// 	{
+	// 		broadcaster_language: 'es',
+	// 		broadcaster_login: 'gndxdev',
+	// 		display_name: 'gndxdev',
+	// 		game_id: '509670',
+	// 		game_name: 'Science & Technology',
+	// 		id: '488869837',
+	// 		is_live: false,
+	// 		tag_ids: [],
+	// 		thumbnail_url:
+	// 			'https://static-cdn.jtvnw.net/jtv_user_pictures/1b633c9c-18f2-4ef8-a9e9-5b69291bcefb-profile_image-300x300.png',
+	// 		title: '🔥 Un Frontend en cuarentena #Frontend #JavaScript',
+	// 		started_at: ''
+	// 	}
+	// ])
+	const [favoriteChannels, setFavoriteChannels] = useState([])
 
 	const addStreamerChannel = async (event) => {
 		event.preventDefault()
@@ -50,6 +51,54 @@ const Home = () => {
 				<meta
 					name="viewport"
 					content="initial-scale=1.0, width=device-width"
+				/>
+				<meta
+					name="description"
+					content="Build a personalized Twitch dashboard using the Twitch API + Next.js "
+				/>
+				<meta charset="UTF-8" />
+				<meta
+					name="keywords"
+					content="nextjs,reactjs,css modules,api routes"
+				/>
+				<meta property="og:type" content="website" />
+				<meta property="og:url" content="https://next-js-dashboard-twitch-api.vercel.app/" />
+				<meta property="og:title" content="website" />
+				<meta
+					property="og:type"
+					content="Personal Twitch Dashboard"
+				/>
+				<meta
+					property="og:description"
+					content="Build a personalized Twitch dashboard using the Twitch API + Next.js "
+				/>
+				<meta
+					property="og:image"
+					content="https://res.cloudinary.com/efrenmartinez/image/upload/v1630521109/efrenmartinez.dev/projects/twitch-dashboard_zdk94v.png"
+				/>
+				// Twitter Card
+				<meta property="twitter:card" content="summary_large_image" />
+				<meta
+					property="twitter:url"
+					content="https://next-js-dashboard-twitch-api.vercel.app/"
+				/>
+				<meta
+					property="twitter:title"
+					content="Personal Twitch Dashboard"
+				/>
+				<meta
+					property="twitter:description"
+					content="Build a personalized Twitch dashboard using the Twitch API + Next.js "
+				/>
+				<meta
+					property="twitter:image"
+					content="https://res.cloudinary.com/efrenmartinez/image/upload/v1630521109/efrenmartinez.dev/projects/twitch-dashboard_zdk94v.png"
+				/>
+				<meta property="twitter:creator" content="@efrencodes" />
+				<meta property="twitter:site" content="@efrencodes" />
+				<meta
+					property="twitter:image:alt"
+					content="Personal Twitch Dashboard"
 				/>
 			</Head>
 			<div className={styles.inputContainer}>
